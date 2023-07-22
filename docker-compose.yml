@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+  mongodb:
+    image: mongo:latest
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb-data:/data/db
+      - mongodb-log:/var/log/mongodb
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bov_api
+    restart: always
+    volumes:
+      - .:/usr/app
+    env_file:
+      - .env
+    command: yarn start:dev
+    ports:
+      - ${APPLICATION_PORT}:3333
+
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-log:
+    driver: local
