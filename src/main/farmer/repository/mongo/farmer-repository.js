@@ -40,6 +40,8 @@ export default class FarmerRepository {
     if (!farmer) {
       throw new NotFound('Farmer not found');
     }
+
+    return farmer;
   }
 
   async thereIsAlreadyARegisteredEmail(email) {
