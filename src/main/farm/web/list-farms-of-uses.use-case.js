@@ -6,5 +6,5 @@ import listFarmsOfUserUseCase from '../use-cases/list-farms-of-user.use-case';
  */
 export default async function listFarmsOfUserController(request, reponse) {
   const farms = await listFarmsOfUserUseCase.execute(request.user.id);
-  return reponse.status(201).json(farms);
+  return reponse.status(200).json(farms);
 }

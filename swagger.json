@@ -319,6 +319,112 @@
           }
         }
       }
+    },
+    "/api/farm/milk-production": {
+      "summary": "Farm group endpoint",
+      "post": {
+        "summary": "Store and list milk production data.",
+        "tags": ["farm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["volume", "farmId", "distance"],
+                "properties": {
+                  "distance": {
+                    "type": "number"
+                  },
+                  "volume": {
+                    "type": "number"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "farmId":  {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A successful response with message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Farmer created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List all farmer of farmer",
+        "tags": ["farm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A successful response with your farmer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Your farm id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Your farm name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Your farm email"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "description": "Your cpf name"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "created date of farm"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "updated date of farm"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "description": "deleted date of farm"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
