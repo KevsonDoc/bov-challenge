@@ -373,13 +373,37 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/farm/milk-production/{id}": {
+      "summary": "Farm group endpoint",
       "get": {
         "summary": "List all farmer of farmer",
         "tags": ["farm"],
+        "operationId": "asdas",
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of farm",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": true,
+            "description": "Mês do ano",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

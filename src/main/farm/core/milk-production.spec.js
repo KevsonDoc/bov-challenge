@@ -42,7 +42,6 @@ describe('farm', () => {
     expect(milkProduction.total).equal(58503);
   });
 
-  // Preço = (Volume do mês * Preço base) - (Custo por KM * distância da fazenda até a fábrica) + (Bônus p/ produção * litros entregues no mês)
   test('Shoud compute milk production between may and hune with a distance of more than 50KM.', async () => {
     const milkProduction = new MilkProduction({
       volumeOfMonth: 100,

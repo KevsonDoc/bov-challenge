@@ -6,6 +6,7 @@ import showFarmerInformationLoggedController from '../../main/farmer/web/show-fa
 import addFarmToSystemController from '../../main/farm/web/add-farm-to-system.use-case';
 import listFarmsOfUserController from '../../main/farm/web/list-farms-of-uses.use-case';
 import addMilkProductionController from '../../main/farm/web/add-milk-production.controller';
+import volumeDeliveredForEachDayWithMonthlyAverageController from '../../main/farm/web/volume-delivered-for-each-day-with-monthly-average.controller';
 
 const route = Router();
 
@@ -18,5 +19,10 @@ route.get('/farmer', authenticationMiddeware, showFarmerInformationLoggedControl
 route.post('/farm', authenticationMiddeware, addFarmToSystemController);
 route.get('/farm', authenticationMiddeware, listFarmsOfUserController);
 route.post('/farm/milk-production', authenticationMiddeware, addMilkProductionController);
+route.get(
+  '/farm/milk-production/:id',
+  authenticationMiddeware,
+  volumeDeliveredForEachDayWithMonthlyAverageController,
+);
 
 export default route;
