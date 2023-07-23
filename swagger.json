@@ -16,12 +16,24 @@
       "name": "api"
     },
     {
+      "name": "authentication"
+    },
+    {
       "name": "farmer"
     },
     {
       "name": "farm"
     }
   ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
   "paths": {
     "/api": {
       "summary": "Get a list of users",
@@ -49,8 +61,9 @@
       }
     },
     "/api/farmer": {
-      "summary": "Create a farm in application",
+      "summary": "Farmer ground endpoint",
       "post": {
+        "summary": "Create a new farmer",
         "tags": ["farmer"],
         "requestBody": {
           "required": true,
@@ -97,6 +110,79 @@
                     "message": {
                       "type": "string",
                       "example": "Farmer created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get a farmer logged informations",
+        "tags": ["farmer"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A successful response with your farmer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Your bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/sign": {
+      "summary": "Sign a farm in application",
+      "post": {
+        "summary": "Authenticate farmer in application",
+        "tags": ["authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Farmer's e-mail"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Farmer's password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A successful response with your token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "Your bearer token"
                     }
                   }
                 }
