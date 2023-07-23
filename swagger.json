@@ -1,19 +1,32 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Sample API",
-    "description": "A sample API to demonstrate Swagger documentation",
+    "title": "Bov chalenge",
+    "description": "Bov chalenge API documentation",
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
+      "url": "http://localhost:3333",
       "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "api"
+    },
+    {
+      "name": "farmer"
+    },
+    {
+      "name": "farm"
     }
   ],
   "paths": {
     "/api": {
+      "summary": "Get a list of users",
       "get": {
+        "tags": ["api"],
         "summary": "Returns a greeting message",
         "responses": {
           "200": {
@@ -26,6 +39,64 @@
                     "message": {
                       "type": "string",
                       "example": "Hello, World!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farmer": {
+      "summary": "Create a farm in application",
+      "post": {
+        "tags": ["farmer"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "cpf", "password"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Farmer's name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Farmer's e-mail"
+                  },
+                  "cpf":  {
+                    "type": "string",
+                    "format": "cpf",
+                    "description": "Farmer's CPF",
+                    "minLength": 14,
+                    "maxLength": 14
+                  },
+                  "password": {
+                    "type": "string",
+                    "maxLength": 8,
+                    "description": "Farmer's password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A successful response with message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Farmer created"
                     }
                   }
                 }
