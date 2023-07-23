@@ -17,12 +17,10 @@ export default class FarmerRepository {
 
     const farmer = await this.farmerModel.findOne({
       email,
-      deletedAt: {
-        $exists: false,
-      },
+      deletedAt: null,
     });
 
-    return farmer;
+    return { id: farmer.id, email: farmer?.email, password: farmer?.password };
   }
 
   async findOneById(id) {
@@ -31,23 +29,21 @@ export default class FarmerRepository {
     }
 
     const farmer = await this.farmerModel.findOne({
-      id,
-      deletedAt: {
-        $exists: false,
-      },
+      _id: id,
+      deletedAt: null,
     });
 
     if (!farmer) {
       throw new NotFound('Farmer not found');
     }
 
-    return farmer;
+    return { ...farmer.toJSON(), id: farmer._id, _id: undefined };
   }
 
   async thereIsAlreadyARegisteredEmail(email) {
     const farmer = await this.farmerModel.findOne({
       email,
-      deletedAt: { $exists: false },
+      deletedAt: null,
     });
 
     if (farmer) {
@@ -58,9 +54,7 @@ export default class FarmerRepository {
   async thereIsAlreadyARegisteredCpf(cpf) {
     const farmer = await this.farmerModel.findOne({
       cpf,
-      deletedAt: {
-        $exists: true,
-      },
+      deletedAt: null,
     });
 
     if (farmer) {

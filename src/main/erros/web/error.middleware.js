@@ -10,7 +10,6 @@ export default async function addFarmerToSystemController(error, _, response, ne
   }
 
   if (error instanceof NotFound) {
-    console.log('alkjslçanksdlnasldkn');
     console.log(error);
     return response.status(404).json({ message: error.message });
   }
