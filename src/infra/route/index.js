@@ -7,6 +7,7 @@ import addFarmToSystemController from '../../main/farm/web/add-farm-to-system.us
 import listFarmsOfUserController from '../../main/farm/web/list-farms-of-uses.use-case';
 import addMilkProductionController from '../../main/farm/web/add-milk-production.controller';
 import volumeDeliveredForEachDayWithMonthlyAverageController from '../../main/farm/web/volume-delivered-for-each-day-with-monthly-average.controller';
+import showPricePerLiterByMonthPaid from '../../main/farm/web/show-price-per-liter-by-month-paid.controller';
 
 const route = Router();
 
@@ -23,6 +24,11 @@ route.get(
   '/farm/milk-production/:id',
   authenticationMiddeware,
   volumeDeliveredForEachDayWithMonthlyAverageController,
+);
+route.get(
+  '/farm/milk-production/month/:id/',
+  authenticationMiddeware,
+  showPricePerLiterByMonthPaid,
 );
 
 export default route;

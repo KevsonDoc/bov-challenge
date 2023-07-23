@@ -35,18 +35,25 @@ export default class MilkProductionRepository {
     const data = {
       average: 0,
       days: [],
+      pricePerLiter: 0,
     };
 
     let volumeMonth = 0;
+    let total = 0;
+
     for (let index = 1; index <= endDate.getDate(); index += 1) {
       let volumeDay = 0;
+      let totalDay = 0;
       milkProduction
         .filter((milkProductionItem) => milkProductionItem.date.getDate() === index)
         .forEach((milkProductionInDayItem) => {
           volumeDay += milkProductionInDayItem.volume;
+          totalDay += milkProductionInDayItem.total;
         });
 
       volumeMonth += volumeDay;
+      total += totalDay;
+
       data.days.push({
         day: index,
         volume: volumeDay,
@@ -54,6 +61,11 @@ export default class MilkProductionRepository {
     }
 
     data.average = volumeMonth / endDate.getDate();
+
+    if (total !== 0 && volumeMonth !== 0) {
+      data.pricePerLiter = total / volumeMonth;
+    }
+
     return data;
   }
 
