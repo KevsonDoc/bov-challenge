@@ -60,6 +60,53 @@
         }
       }
     },
+
+    "/api/auth/sign": {
+      "summary": "Sign a farm in application",
+      "post": {
+        "summary": "Authenticate farmer in application",
+        "tags": ["authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Farmer's e-mail"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Farmer's password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A successful response with your token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "Your bearer token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/farmer": {
       "summary": "Farmer ground endpoint",
       "post": {
@@ -134,9 +181,33 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Your farm id"
+                    },
                     "name": {
                       "type": "string",
-                      "example": "Your bearer token"
+                      "description": "Your farm name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Your farm email"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "description": "Your cpf name"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "created date of farm"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "updated date of farm"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "description": "deleted date of farm"
                     }
                   }
                 }
@@ -146,26 +217,32 @@
         }
       }
     },
-    "/api/auth/sign": {
-      "summary": "Sign a farm in application",
+    "/api/farm": {
+      "summary": "Farm group endpoint",
       "post": {
-        "summary": "Authenticate farmer in application",
-        "tags": ["authentication"],
+        "summary": "Create a new farm",
+        "tags": ["farm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": ["corporateName", "cnpj"],
                 "properties": {
-                  "email": {
-                    "type": "string",
-                    "description": "Farmer's e-mail"
+                  "corporateName": {
+                    "type": "string"
                   },
-                  "password": {
+                  "cnpj":  {
                     "type": "string",
-                    "description": "Farmer's password"
+                    "format": "cpf",
+                    "minLength": 18,
+                    "maxLength": 18
                   }
                 }
               }
@@ -174,15 +251,196 @@
         },
         "responses": {
           "201": {
-            "description": "A successful response with your token",
+            "description": "A successful response with message",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": {
+                    "message": {
                       "type": "string",
-                      "example": "Your bearer token"
+                      "example": "Farmer created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List all farmer of farmer",
+        "tags": ["farm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A successful response with your farmer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Your farm id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Your farm name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Your farm email"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "description": "Your cpf name"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "created date of farm"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "updated date of farm"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "description": "deleted date of farm"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farm/milk-production": {
+      "summary": "Farm group endpoint",
+      "post": {
+        "summary": "Store and list milk production data.",
+        "tags": ["farm"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["volume", "farmId", "distance"],
+                "properties": {
+                  "distance": {
+                    "type": "number"
+                  },
+                  "volume": {
+                    "type": "number"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "farmId":  {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A successful response with message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Farmer created"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/farm/milk-production/{id}": {
+      "summary": "Farm group endpoint",
+      "get": {
+        "summary": "List all farmer of farmer",
+        "tags": ["farm"],
+        "operationId": "asdas",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of farm",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "required": true,
+            "description": "Mês do ano",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A successful response with your farmer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Your farm id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Your farm name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Your farm email"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "description": "Your cpf name"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "created date of farm"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "updated date of farm"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "description": "deleted date of farm"
                     }
                   }
                 }

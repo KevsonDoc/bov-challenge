@@ -1,30 +1,21 @@
 const mongoose = require('mongoose');
 
 const FarmerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
+  cnpj: {
     type: String,
     required: true,
     unique: true,
   },
-  cpf: {
+  corporateName: {
     type: String,
     required: true,
-    unique: true,
   },
-  password: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  farmer: { type: mongoose.Schema.Types.ObjectId, ref: 'Farmer' },
   createdAt: { type: Date },
   updatedAt: { type: Date },
   deletedAt: { type: Date },
 });
 
-const FarmerModel = mongoose.model('Farmer', FarmerSchema);
+const FarmerModel = mongoose.model('Farm', FarmerSchema);
 
 export default FarmerModel;

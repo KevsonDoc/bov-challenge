@@ -13,6 +13,10 @@ export default class BcryptAdapter {
   }
 
   async compare({ password, hash }) {
+    if (!password || !hash) {
+      throw new UnauthorizedError('Invalid credentials');
+    }
+
     const match = await this.bcrypt.compare(password, hash);
 
     if (!match) {
