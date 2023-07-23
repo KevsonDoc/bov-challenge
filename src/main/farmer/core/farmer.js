@@ -17,24 +17,24 @@ export default class Farmer {
 
   deletedAt = null;
 
-  constructor(farm) {
-    if (!farm?.id) {
+  constructor(farmer) {
+    if (!farmer?.id) {
       this.id = uuid();
     }
 
-    if (!farm?.createdAt) {
+    if (!farmer?.createdAt) {
       this.createdAt = new Date();
     }
 
-    Object.assign(this, farm);
+    Object.assign(this, farmer);
   }
 
-  update(farm) {
+  update(farmer) {
     if (!this.id && !this.createdAt) {
       throw new Error('Invalid farmer');
     }
 
-    Object.assign(this, farm);
+    Object.assign(this, farmer);
     this.update = new Date();
   }
 
