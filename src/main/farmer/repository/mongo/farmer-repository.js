@@ -1,4 +1,5 @@
 import NotFound from '../../../erros/core/not-found.error';
+import UnauthorizedError from '../../../erros/core/unauthorized.error';
 import UnprocessableEntity from '../../../erros/core/unprocessable-entity.error';
 import FarmerModel from './farmer.model';
 
@@ -7,6 +8,21 @@ export default class FarmerRepository {
 
   constructor() {
     this.farmerModel = FarmerModel;
+  }
+
+  async findOneByEmail(email) {
+    if (!email) {
+      throw new UnauthorizedError('Invalid credentials');
+    }
+
+    const farmer = await this.farmerModel.findOne({
+      email,
+      deletedAt: {
+        $exists: false,
+      },
+    });
+
+    return farmer;
   }
 
   async findOneById(id) {

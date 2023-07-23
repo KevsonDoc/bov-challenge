@@ -1,19 +1,19 @@
-import CreateHassWithBcrypt from '../adapters/create-has-with-bcrypt.adapter';
+import BcryptAdapter from '../adapters/bcrypt.adapter';
 import ValidateCredentialsWithYup from '../validation/validate-credentials.yup';
 
 class CreateCredentialsUseCase {
-  createHashAdapter;
+  encryptionAdapter;
 
   validateCredentialsAdapter;
 
-  constructor(validateCredentialsAdapter, createHashAdapter) {
+  constructor(validateCredentialsAdapter, encryptionAdapter) {
     this.validateCredentialsAdapter = validateCredentialsAdapter;
-    this.createHashAdapter = createHashAdapter;
+    this.encryptionAdapter = encryptionAdapter;
   }
 
   async execute(credentials) {
     await this.validateCredentialsAdapter.validate(credentials);
-    const hash = await this.createHashAdapter.execute(credentials.password);
+    const hash = await this.encryptionAdapter.generateHash(credentials.password);
     return {
       email: credentials.email,
       password: hash,
@@ -22,9 +22,9 @@ class CreateCredentialsUseCase {
 }
 
 const validateCredentialsAdapter = new ValidateCredentialsWithYup();
-const createCredentialsAdapter = new CreateHassWithBcrypt();
+const encryptionAdapter = new BcryptAdapter();
 const createCredentialsUseCase = new CreateCredentialsUseCase(
   validateCredentialsAdapter,
-  createCredentialsAdapter,
+  encryptionAdapter,
 );
 export default createCredentialsUseCase;
