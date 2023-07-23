@@ -27,17 +27,26 @@ export default class FarmRepository {
   }
 
   async thereIsAlreadyARegisteredCnpj(cnpj) {
-    const farmer = await this.farmerModel.findOne({
+    const farm = await this.farmerModel.findOne({
       cnpj,
       deletedAt: null,
     });
 
-    if (farmer) {
+    if (farm) {
       throw new UnprocessableEntity('This cnpj is already registered');
     }
   }
 
   async save({ farmerId, ...farm }) {
     await this.farmerModel.create({ ...farm, farmer: farmerId });
+  }
+
+  async findByFarmerId(farmerId) {
+    const farmer = await this.farmerModel.find({
+      farmer: farmerId,
+      deletedAt: null,
+    });
+
+    return farmer;
   }
 }

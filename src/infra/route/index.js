@@ -4,6 +4,7 @@ import signController from '../../main/authentication/web/sign.controller';
 import addFarmerToSystemController from '../../main/farmer/web/add-farmer-to-system.controller';
 import showFarmerInformationLoggedController from '../../main/farmer/web/show-farmer-information-logged.controller';
 import addFarmToSystemController from '../../main/farm/web/add-farm-to-system.use-case';
+import listFarmsOfUserController from '../../main/farm/web/list-farms-of-uses.use-case';
 
 const route = Router();
 
@@ -14,5 +15,5 @@ route.post('/farmer', addFarmerToSystemController);
 route.get('/farmer', authenticationMiddeware, showFarmerInformationLoggedController);
 
 route.post('/farm', authenticationMiddeware, addFarmToSystemController);
-
+route.get('/farm', authenticationMiddeware, listFarmsOfUserController);
 export default route;
