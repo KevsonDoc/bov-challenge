@@ -13,7 +13,6 @@ class ShowFarmerByIdUseCase {
 
   async execute(farmerId) {
     const farmer = await this.farmerRepository.findOneById(farmerId);
-    console.log(farmer);
     return this.farmerView(farmer);
   }
 }
