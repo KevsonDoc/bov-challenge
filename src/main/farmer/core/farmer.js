@@ -13,9 +13,9 @@ export default class Farmer {
 
   createdAt;
 
-  updatedAt;
+  updatedAt = null;
 
-  deletedAt;
+  deletedAt = null;
 
   constructor(farm) {
     if (!farm?.id) {
