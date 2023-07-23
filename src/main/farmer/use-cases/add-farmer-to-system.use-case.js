@@ -1,6 +1,6 @@
 import createCredentialsUseCase from '../../authentication/use-cases/create-credentials.use-case';
 import Farmer from '../core/farmer';
-import FarmerRepository from '../repository/mongo/farmer-repository';
+import FarmerRepository from '../repository/mongo/farmer.repository';
 import ValidateFarmerWithYup from '../validation/validate-farmer.yup';
 
 class AddFarmerToSystemUseCase {

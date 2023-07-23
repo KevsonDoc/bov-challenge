@@ -1,4 +1,4 @@
-import FarmerRepository from '../repository/mongo/farmer-repository';
+import FarmerRepository from '../repository/mongo/farmer.repository';
 
 class FindFarmerByEmailUseCase {
   farmerRepository;
