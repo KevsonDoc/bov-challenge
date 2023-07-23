@@ -59,13 +59,13 @@ export default class MilkProductionRepository {
 
   async findProductionVolumeForTheMonth(farmId, date) {
     const startDate = set(date, {
-      date: 0,
+      date: 1,
       hours: 0,
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
     });
-    const endDate = add(date, { days: 30 });
+    const endDate = add(date, { months: 1, days: -1 });
 
     const milkProduction = await this.milkProductionModel.find({
       $and: [

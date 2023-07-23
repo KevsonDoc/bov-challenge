@@ -30,7 +30,8 @@ export default class MilkProduction {
         (farm.distance <= 50 ? 0.05 * farm.distance : 0.06 * farm.distance) +
         0 * farm.volumeOfMonth;
     } else {
-      this.price = farm.volumeOfMonth * 1.95 - 0 * farm.distance + 0.01;
+      this.price =
+        farm.volumeOfMonth * 1.95 + (farm.volumeOfMonth >= 10000 ? 0.01 * farm.volumeOfMonth : 0);
     }
 
     this.total = this.price * farm.volume;

@@ -38,8 +38,8 @@ describe('farm', () => {
       date: new Date('2023-08-01'),
     });
 
-    expect(milkProduction.price).equal(195.01);
-    expect(milkProduction.total).equal(58503);
+    expect(milkProduction.price).equal(195.0);
+    expect(milkProduction.total).equal(58500);
   });
 
   test('Shoud compute milk production between may and hune with a distance of more than 50KM.', async () => {
@@ -54,15 +54,15 @@ describe('farm', () => {
     expect(milkProduction.total).equal(52920);
   });
 
-  test('Shoud compute milk production between august and december with a distance of more than 50KM.', async () => {
+  test('Shoud compute milk production between august and december with a distance of more than 50KM more than 1000 in month.', async () => {
     const milkProduction = new MilkProduction({
-      volumeOfMonth: 100,
+      volumeOfMonth: 10000,
       distance: 60,
       volume: 300,
       date: new Date('2023-08-01'),
     });
 
-    expect(milkProduction.price).equal(195.01);
-    expect(milkProduction.total).equal(58503);
+    expect(milkProduction.price).equal(19600);
+    expect(milkProduction.total).equal(5880000);
   });
 });
