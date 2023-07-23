@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import authenticationMiddeware from '../../main/authentication/web/authentication.middleware';
 import signController from '../../main/authentication/web/sign.controller';
+import addFarmToSystemController from '../../main/farm/web/add-farm-to-system.use-case';
+import addMilkProductionController from '../../main/farm/web/add-milk-production.controller';
+import listFarmsOfUserController from '../../main/farm/web/list-farms-of-uses.use-case';
+import showPricePerLiterByMonthPaid from '../../main/farm/web/show-price-per-liter-by-month-paid.controller';
+import showPricePerMonthByYearController from '../../main/farm/web/show-price-per-month-by-year.controller';
+import volumeDeliveredForEachDayWithMonthlyAverageController from '../../main/farm/web/volume-delivered-for-each-day-with-monthly-average.controller';
 import addFarmerToSystemController from '../../main/farmer/web/add-farmer-to-system.controller';
 import showFarmerInformationLoggedController from '../../main/farmer/web/show-farmer-information-logged.controller';
-import addFarmToSystemController from '../../main/farm/web/add-farm-to-system.use-case';
-import listFarmsOfUserController from '../../main/farm/web/list-farms-of-uses.use-case';
-import addMilkProductionController from '../../main/farm/web/add-milk-production.controller';
-import volumeDeliveredForEachDayWithMonthlyAverageController from '../../main/farm/web/volume-delivered-for-each-day-with-monthly-average.controller';
-import showPricePerLiterByMonthPaid from '../../main/farm/web/show-price-per-liter-by-month-paid.controller';
 
 const route = Router();
 
@@ -29,6 +30,11 @@ route.get(
   '/farm/milk-production/month/:id/',
   authenticationMiddeware,
   showPricePerLiterByMonthPaid,
+);
+route.get(
+  '/farm/milk-production/year/:id',
+  authenticationMiddeware,
+  showPricePerMonthByYearController,
 );
 
 export default route;

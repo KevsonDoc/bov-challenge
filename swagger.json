@@ -524,6 +524,81 @@
           }
         }
       }
+    },
+    "/api/farm/milk-production/year/{id}": {
+      "summary": "Farm group endpoint",
+      "get": {
+        "summary": "List all farmer of farmer",
+        "tags": ["farm"],
+        "operationId": "asdas",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID of farm",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "required": true,
+            "description": "Mês do ano",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "A successful response with your farmer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Your farm id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Your farm name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Your farm email"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "description": "Your cpf name"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "created date of farm"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "updated date of farm"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "description": "deleted date of farm"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

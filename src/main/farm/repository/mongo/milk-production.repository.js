@@ -103,4 +103,52 @@ export default class MilkProductionRepository {
   async save({ farmId, ...milkProduction }) {
     await this.milkProductionModel.create({ ...milkProduction, farm: farmId });
   }
+
+  async showPricePerMonthByYear({ farmId, year }) {
+    const startDate = set(new Date(), {
+      year,
+      month: 0,
+      date: 1,
+      hours: 1,
+      minutes: 1,
+      seconds: 1,
+      milliseconds: 1,
+    });
+    const endDate = add(startDate, { years: 1, days: -1 });
+    const milkProduction = await this.milkProductionModel.find({
+      $and: [
+        {
+          farm: farmId,
+          date: { $gte: startDate },
+        },
+        {
+          farm: farmId,
+          date: { $lte: endDate },
+        },
+      ],
+    });
+
+    const data = [];
+
+    for (let index = 0; index <= endDate.getUTCMonth(); index += 1) {
+      let volumeMonth = 0;
+      let totalMonth = 0;
+
+      milkProduction
+        .filter((milkProductionItem) => milkProductionItem.date.getUTCMonth() === index)
+        .forEach((milkProductionInDayItem) => {
+          volumeMonth += milkProductionInDayItem.volume;
+          totalMonth += milkProductionInDayItem.total;
+        });
+
+      data.push({
+        month: index + 1,
+        volume: volumeMonth,
+        total: totalMonth,
+        pricePerLiter: totalMonth === 0 && volumeMonth === 0 ? 0 : totalMonth / volumeMonth,
+      });
+    }
+
+    return data;
+  }
 }
